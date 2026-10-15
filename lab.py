@@ -28,14 +28,14 @@ def gen_link(books_csv):
     except FileExistsError:
         links =  open("result.txt", 'w')
 
-        reader = csv.DictReader(books_csv, delimiter=';', quotechar='"')
-        flag = 1
-        for line in reader:
-            if flag > 20:
-                break
-            links.write(f"{flag}. {line['Автор']}. {line['Название']}"
-                        f" - {line['Дата поступления']}\n")
-            flag += 1
+    reader = csv.DictReader(books_csv, delimiter=';', quotechar='"')
+    flag = 1
+    for line in reader:
+        if flag > 20:
+            break
+        links.write(f"{flag}. {line['Автор']}. {line['Название']}"
+                    f" - {line['Дата поступления']}\n")
+        flag += 1
 
     links.close()
     
