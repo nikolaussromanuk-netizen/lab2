@@ -63,14 +63,27 @@ def read_xml():
     print(num_code)
     print(char_code)
 
+def find_all_tags(books_csv):
+    books_csv.seek(0)
+    reader = csv.DictReader(books_csv, delimiter=';', quotechar='"')
+    tags = set()
+    for line in reader:
+        tag_list = line['Жанр книги'].split('#')
+        for tag in tag_list:
+            tags.add(tag.strip())
+    print(tags)
+
 if __name__ == "__main__":
     with open("books.csv", 'r', encoding='cp1251') as books_csv:
         # 1 задание - считает кол-во имен длинее 30
-        count_big_number(books_csv)
+        #count_big_number(books_csv)
         # 2 задание - поиск книги по автору
-        find_name('Людмила Петрановская', books_csv)
+        #find_name('Людмила Петрановская', books_csv)
         # 3 задание - генерация библиотечных ссылок 
-        gen_link(books_csv)
+        #gen_link(books_csv)
+        # 5 задание Вывести перечень всех тегов без повторений
+        #find_all_tags(books_csv)
+        pass
 
     #Задание 4 - прочитать и распарсить xml
-    read_xml()
+    #read_xml()
