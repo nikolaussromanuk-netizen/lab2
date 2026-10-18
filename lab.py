@@ -73,6 +73,14 @@ def find_all_tags(books_csv):
             tags.add(tag.strip())
     print(tags)
 
+def find_populars(books_csv):
+    books_csv.seek(0)
+    reader = csv.DictReader(books_csv, delimiter=';', quotechar='"')
+    names = [[line['Название'], int(line['Кол-во выдач'])] for line in reader]
+    sorted_names = sorted(names, key=lambda x: x[1])[::-1]
+    for i in range(20):
+        print(sorted_names[i][0])
+
 if __name__ == "__main__":
     with open("books.csv", 'r', encoding='cp1251') as books_csv:
         # 1 задание - считает кол-во имен длинее 30
@@ -83,6 +91,8 @@ if __name__ == "__main__":
         #gen_link(books_csv)
         # 5 задание Вывести перечень всех тегов без повторений
         #find_all_tags(books_csv)
+        # 6 задание: 20 самый популярных книг
+        #find_populars(books_csv)
         pass
 
     #Задание 4 - прочитать и распарсить xml
