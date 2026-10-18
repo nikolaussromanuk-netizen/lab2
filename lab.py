@@ -1,4 +1,5 @@
 import csv
+import xml.dom.minidom as minidom
 
 def count_big_number(books_csv):
     books_csv.seek(0)
@@ -38,7 +39,30 @@ def gen_link(books_csv):
         flag += 1
 
     links.close()
-    
+
+def read_xml():
+    with open('currency.xml', 'r', encoding='cp1251') as xml_file:
+        xml_data = xml_file.read()
+        dom = minidom.parseString(xml_data)
+        dom.normalize()
+        valutes = dom.getElementsByTagName('Valute')
+
+        num_code = []
+        char_code = []
+
+        for valute in valutes:
+            num_node = valute.getElementsByTagName('NumCode')[0]
+            char_node = valute.getElementsByTagName('CharCode')[0]
+
+            num = num_node.firstChild.nodeValue.strip()
+            char = char_node.firstChild.nodeValue
+
+            num_code.append(int(num))
+            char_code.append(char)
+
+    print(num_code)
+    print(char_code)
+
 if __name__ == "__main__":
     with open("books.csv", 'r', encoding='cp1251') as books_csv:
         # 1 задание - считает кол-во имен длинее 30
@@ -48,3 +72,5 @@ if __name__ == "__main__":
         # 3 задание - генерация библиотечных ссылок 
         gen_link(books_csv)
 
+    #Задание 4 - прочитать и распарсить xml
+    read_xml()
