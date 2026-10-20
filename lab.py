@@ -54,7 +54,7 @@ def read_xml():
             num_node = valute.getElementsByTagName('NumCode')[0]
             char_node = valute.getElementsByTagName('CharCode')[0]
 
-            num = num_node.firstChild.nodeValue.strip()
+            num = num_node.firstChild.nodeValue
             char = char_node.firstChild.nodeValue
 
             num_code.append(int(num))
@@ -78,8 +78,16 @@ def find_populars(books_csv):
     reader = csv.DictReader(books_csv, delimiter=';', quotechar='"')
     names = [[line['Название'], int(line['Кол-во выдач'])] for line in reader]
     sorted_names = sorted(names, key=lambda x: x[1])[::-1]
-    for i in range(20):
-        print(sorted_names[i][0])
+
+    used = set()
+    count = 0
+    i = 0
+    while count < 20:
+        if not sorted_names[i][0] in used:
+            count += 1
+            used.add(sorted_names[i][0])
+            print(sorted_names[i][0])
+        i += 1
 
 if __name__ == "__main__":
     with open("books.csv", 'r', encoding='cp1251') as books_csv:
