@@ -24,21 +24,16 @@ def find_name(name, books_csv):
 
 def gen_link(books_csv):
     books_csv.seek(0)
-    try:
-        links =  open("result.txt", 'x')
-    except FileExistsError:
-        links =  open("result.txt", 'w')
+    with open("result.txt", 'a') as links:
 
-    reader = csv.DictReader(books_csv, delimiter=';', quotechar='"')
-    flag = 1
-    for line in reader:
-        if flag > 20:
-            break
-        links.write(f"{flag}. {line['Автор']}. {line['Название']}"
-                    f" - {line['Дата поступления']}\n")
-        flag += 1
-
-    links.close()
+        reader = csv.DictReader(books_csv, delimiter=';', quotechar='"')
+        flag = 1
+        for line in reader:
+            if flag > 20:
+                break
+            links.write(f"{flag}. {line['Автор']}. {line['Название']}"
+                        f" - {line['Дата поступления']}\n")
+            flag += 1
 
 def read_xml():
     with open('currency.xml', 'r', encoding='cp1251') as xml_file:
@@ -95,8 +90,8 @@ if __name__ == "__main__":
         #count_big_number(books_csv)
         # 2 задание - поиск книги по автору
         #find_name('Людмила Петрановская', books_csv)
-        # 3 задание - генерация библиотечных ссылок 
-        #gen_link(books_csv)
+        # 3 задание - генерация библиотечных ссылок
+        gen_link(books_csv)
         # 5 задание Вывести перечень всех тегов без повторений
         #find_all_tags(books_csv)
         # 6 задание: 20 самый популярных книг
